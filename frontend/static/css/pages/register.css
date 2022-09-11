@@ -1,0 +1,31 @@
+body {
+    background-color: #000;
+}
+
+div.cardregister a.aaa,
+div.cardregister h1 {
+    display: block;
+    text-align: center;
+}
+
+div.cardregister button.rigister__button {
+    display: block;
+    margin: auto;
+}
+
+div.cardregister input {
+    border-color: rgb(0, 235, 125);
+    margin-top: 5px;
+}
+
+div.cardregister {
+    font-size: large;
+    color: rgb(0, 235, 125);
+    margin: auto;
+    padding: 5%;
+    width: 300px;
+    align-items: center;
+    /* border: 1px solid rgb(0, 235, 125); */
+    border-radius: 15px;
+    background-color: rgba(20, 20, 20, 0.705);
+}
