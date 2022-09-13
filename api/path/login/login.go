@@ -6,6 +6,7 @@ import (
 	h "api/hash_class"
 	jwt "api/jwt/service"
 
+	r "api/random"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -28,7 +29,7 @@ func Login(c *gin.Context, s db.Db_mongo, am gmail.GAmll) {
 
 	}
 	t := time.Now().Format("2006-01-02 15:04:05")
-	OTP := GenOTP()
+	OTP := r.RandomOTP(6)
 	MMM := make(map[string]string)
 	cha := make(chan primitive.D)
 

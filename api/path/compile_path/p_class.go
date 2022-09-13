@@ -4,7 +4,7 @@ import (
 	db "api/db"
 	"api/gmail"
 	p "api/path/login"
-	P "api/path/register"
+	Pa "api/path/register"
 
 	v "api/path/verify_gmail"
 	config "api/setting"
@@ -47,7 +47,7 @@ func Verifyotp_func(c *gin.Context) {
 
 func Register(c *gin.Context) {
 
-	P.Register(c, s, am)
+	Pa.Register(c, s, am)
 }
 func Login(c *gin.Context) {
 

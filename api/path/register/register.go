@@ -5,7 +5,7 @@ import (
 	"api/gmail"
 	h "api/hash_class"
 	jwt "api/jwt/service"
-
+	r "api/random"
 	"fmt"
 	"time"
 
@@ -64,8 +64,8 @@ func Register(c *gin.Context, s db.Db_mongo, am gmail.GAmll) {
 		datauser := <-cha
 		if datauser == nil || datauser.Map()["identifind"] == false {
 			go s.Db_DeleteMany_UniDentify(bson.M{"email": bson.M{"$eq": fromreg.Email}})
-			tag := string(GanuserTag(s))
-			Ax := GenOTP()
+			tag := GanuserTag(s, fromreg.Username)
+			Ax := r.RandomOTP(6)
 			go h.AsyncMhash(Ax, hss)
 			t := time.Now().Format("2006-01-02 15:04:05")
 			g, _ := jwt.GenerateTokenReg(c, tag, fromreg.Username, fromreg.Email, t, int64(60456))

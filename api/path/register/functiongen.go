@@ -3,51 +3,39 @@ package register
 import (
 	db "api/db"
 
-	"math/rand"
+	r "api/random"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func GanuserTag(s db.Db_mongo) string {
+func GanuserTag(s db.Db_mongo, un string) string {
 	for {
-		bytes := make([]byte, 4)
-		var pool = "1234567890"
-		for i := 0; i < 4; i++ {
-			bytes[i] = pool[rand.Intn(len(pool))]
-		}
+
+		Tag := r.Randomid(4)
 		some := make(chan primitive.D)
+		name := make(chan primitive.D)
 		//name + tag
-		go s.Db_FindtOne("tag", string(bytes), some)
+		go s.Db_FindtOne("tag", Tag, some)
+		go s.Db_FindtOne("username", un, name)
 		ax := <-some
-		if ax == nil || ax.Map()["identifind"] == false {
-			return string(bytes)
+		cs := <-name
+		if ax == nil || cs == nil {
+			return Tag
 		}
 	}
 
 }
 func Ganuserid(s db.Db_mongo) string {
 	for {
-		var pool = "1234567890"
-		dd := make([]byte, 13)
-		for i := 0; i < 13; i++ {
-			dd[i] = pool[rand.Intn(len(pool))]
-		}
+
+		id := r.Randomid(13)
 		some := make(chan primitive.D)
-		go s.Db_FindtOne("userid", string(dd), some)
+		go s.Db_FindtOne("userid", string(id), some)
 		ax := <-some
 
 		if ax == nil || ax.Map()["identifind"] == false {
-			return string(dd)
+			return id
 		}
 	}
 
-}
-func GenOTP() string {
-
-	bytes := make([]byte, 6)
-	var pool = "1234567890abcdefghijklmopqrsyz"
-	for i := 0; i < 6; i++ {
-		bytes[i] = pool[rand.Intn(len(pool))]
-	}
-	return string(bytes)
 }
