@@ -72,12 +72,17 @@ func Register(c *gin.Context, s db.Db_mongo, am gmail.GAmll) {
 			go h.AsyncMhash(g, hs)
 			go saveDAta(s, fromreg.Email, fromreg.Password, fromreg.Username, tag, <-hs+" "+<-hss, t)
 			go am.SEndlogin(fromreg.Username, tag, Ax, fromreg.Email)
+
+			fromreg = Reg{}
+			fmt.Println(Ax)
 			c.JSON(200, gin.H{
 				"message": "Register suss",
 				"hee":     g,
 			})
-			fromreg = Reg{}
-			fmt.Println(Ax)
+		} else {
+			c.JSON(200, gin.H{
+				"message": "Register fg",
+			})
 		}
 
 	} else {

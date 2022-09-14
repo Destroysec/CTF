@@ -4,10 +4,10 @@ import (
 	//jwt "api/jwt/service"
 	M "api/Middleware"
 	p "api/path/compile_path"
-
-	// "fmt"
-
+	rr "api/random"
 	"errors"
+	"fmt"
+	"os"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -31,12 +31,20 @@ func CORSMiddleware() gin.HandlerFunc {
 }
 func main() {
 	r := gin.Default()
-
+	var a string
 	r.Use(CORSMiddleware())
-	lm := limiter.NewRateLimiter(time.Minute, 10, func(ctx *gin.Context) (string, error) {
+	go func() {
+		for {
 
+			a = rr.RandomKEY(25)
+			os.WriteFile("../KEYHEADER.DESTROYSEC", []byte(a), 0644)
+			fmt.Println(a)
+			time.Sleep(time.Minute * 10)
+		}
+	}()
+	lm := limiter.NewRateLimiter(time.Minute, 10, func(ctx *gin.Context) (string, error) {
 		key := ctx.Request.Header.Get("X-API-KEY")
-		if key != "" {
+		if key == a {
 			return key, nil
 		}
 		return "", errors.New("API key is missing")

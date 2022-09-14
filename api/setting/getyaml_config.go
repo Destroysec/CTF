@@ -12,7 +12,6 @@ func Get_Config() *Data_Config {
 	data := &Data_Config{}
 	err2 := yaml.Unmarshal(yamlFile, data)
 
-	fmt.Print(data)
 	if err != nil {
 		fmt.Print("have error, find or can't open the config.yml\n")
 		fmt.Println(err)
