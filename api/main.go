@@ -37,7 +37,7 @@ func main() {
 		for {
 
 			a = rr.RandomKEY(25)
-			os.WriteFile("../KEYHEADER.DESTROYSEC", []byte(a), 0644)
+			os.WriteFile("../.env", []byte("KEY="+a), 0644)
 			fmt.Println(a)
 			time.Sleep(time.Minute * 10)
 		}

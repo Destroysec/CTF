@@ -47,23 +47,22 @@ func (db Db_mongo) Db_FixOneStuck_UniDentify(filter, update interface{}) {
 
 //
 func (db Db_mongo) Db_Delete_UniDentify(something interface{}) error {
-	coll := db.regcollection
-	_, err := coll.DeleteOne(context.TODO(), something)
+
+	_, err := db.regcollection.DeleteOne(context.TODO(), something)
 
 	//.Remove(something)
 	return err
 }
 func (db Db_mongo) Db_DeleteMany_UniDentify(something interface{}) error {
-	coll := db.regcollection
-	f, err := coll.DeleteMany(context.TODO(), something)
+
+	f, err := db.regcollection.DeleteMany(context.TODO(), something)
 	fmt.Print(f)
 	//.Remove(something)
 	return err
 }
 func (db Db_mongo) Db_FindALLD_UniDentify(dfkdf bson.D) ([]primitive.D, error) {
 
-	coll := db.regcollection
-	axc, err := coll.Find(context.TODO(), dfkdf)
+	axc, err := db.regcollection.Find(context.TODO(), dfkdf)
 	var results []bson.D
 	if err != nil {
 		fmt.Print(err)
@@ -73,7 +72,7 @@ func (db Db_mongo) Db_FindALLD_UniDentify(dfkdf bson.D) ([]primitive.D, error) {
 	}
 
 	var result bson.D
-	if err = coll.FindOne(context.TODO(), dfkdf).Decode(&result); err != nil {
+	if err = db.regcollection.FindOne(context.TODO(), dfkdf).Decode(&result); err != nil {
 		return nil, err
 	}
 	return results, nil
@@ -81,8 +80,8 @@ func (db Db_mongo) Db_FindALLD_UniDentify(dfkdf bson.D) ([]primitive.D, error) {
 func (db Db_mongo) Db_FindALLunD(dfkdf string, asdsd string, som interface{}, something interface{}) ([]primitive.D, error) {
 
 	f := bson.D{{dfkdf, something}, {asdsd, som}}
-	coll := db.regcollection
-	axc, err := coll.Find(context.TODO(), f)
+
+	axc, err := db.regcollection.Find(context.TODO(), f)
 	var results []bson.D
 	if err != nil {
 		fmt.Print(err)
@@ -92,7 +91,7 @@ func (db Db_mongo) Db_FindALLunD(dfkdf string, asdsd string, som interface{}, so
 	}
 
 	var result bson.D
-	if err = coll.FindOne(context.TODO(), f).Decode(&result); err != nil {
+	if err = db.regcollection.FindOne(context.TODO(), f).Decode(&result); err != nil {
 		return nil, err
 	}
 	return results, nil

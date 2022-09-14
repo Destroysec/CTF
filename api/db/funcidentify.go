@@ -18,13 +18,6 @@ func (db Db_mongo) Db_InsertOne(Insert map[string]string) {
 	}
 }
 
-type DATA struct {
-	Email   string `bson:"Email" json:"Email"`
-	Subdata struct {
-		Password, Username, Tag, UserId string
-	}
-}
-
 func (db Db_mongo) Db_FixOneStuck(filter, update interface{}) {
 
 	_, err := db.collection.UpdateOne(

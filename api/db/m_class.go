@@ -32,6 +32,9 @@ func (db *Db_mongo) Db_start(ztructDB DBStarterConfig) {
 	defer cte()
 
 	err = client.Connect(ctx)
+	if err != nil {
+		fmt.Print(err)
+	}
 	db.collection = client.Database("WEB").Collection(ztructDB.DATA.Database.Collection)
 	db.regcollection = client.Database("WEB").Collection(ztructDB.DATA.Database.Recollection)
 
