@@ -45,21 +45,15 @@ func Verifyotp(c *gin.Context, s db.Db_mongo) {
 
 	hashjwt := make(chan string)
 	var split []string
-	var dsfdsf primitive.D
+
 	tn := time.Now().Format("2006-01-02 15:04:05")
 	some, e := s.Db_FindALLunD("username", "tag", a.Claims.(jwt.MapClaims)["jti"].(string), a.Claims.(jwt.MapClaims)["aud"].(string))
 
 	if e != nil {
 		some, _ = s.Db_FindALLD("username", "tag", a.Claims.(jwt.MapClaims)["jti"].(string), a.Claims.(jwt.MapClaims)["aud"].(string))
-		for _, CC := range some[0].Map()["SessionOTP"].(primitive.A) {
 
-			if CC.(primitive.D).Map()[a.Claims.(jwt.MapClaims)["sub"].(string)] != nil {
-				dsfdsf = CC.(primitive.D)
-				split = strings.Split(dsfdsf.Map()[a.Claims.(jwt.MapClaims)["sub"].(string)].(string), " ")
-				go h.Vcheck(split[1], Ax.OTP, checkotp)
-			}
-
-		}
+		split = strings.Split(some[0].Map()["SessionOTP"].(string), " ")
+		go h.Vcheck(split[1], Ax.OTP, checkotp)
 
 		g, _ := j.GenerateTokenReg(c, some[0].Map()["tag"].(string), some[0].Map()["username"].(string), some[0].Map()["email"].(string), tn, int64(60456))
 		go h.AsyncMhash(g, hashjwt)
@@ -71,7 +65,7 @@ func Verifyotp(c *gin.Context, s db.Db_mongo) {
 			go s.Db_FixOneStuck(bson.M{"email": bson.M{"$eq": some[0].Map()["email"].(string)}},
 				bson.M{"$push": bson.M{"sessionauthor": session}})
 			s.RemoveArray(bson.M{"email": bson.M{"$eq": some[0].Map()["email"].(string)}},
-				bson.M{"$pull": bson.M{"SessionOTP": dsfdsf}})
+				bson.M{"$set": bson.M{"SessionOTP": some[0].Map()["SessionOTP"].(string)}})
 			c.JSON(200, gin.H{
 				"message": "req okay",
 				"s":       g,
