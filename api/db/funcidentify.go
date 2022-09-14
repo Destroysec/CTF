@@ -77,8 +77,8 @@ func (db Db_mongo) Db_FindALL(dfkdf string, something interface{}) ([]primitive.
 func (db Db_mongo) Db_FindALLD(dfkdf string, asdsd string, som interface{}, something interface{}) ([]primitive.D, error) {
 
 	f := bson.D{{dfkdf, something}, {asdsd, som}}
-	coll := db.collection
-	axc, err := coll.Find(context.TODO(), f)
+
+	axc, err := db.collection.Find(context.TODO(), f)
 	var results []bson.D
 	if err != nil {
 		fmt.Print(err)
@@ -88,7 +88,7 @@ func (db Db_mongo) Db_FindALLD(dfkdf string, asdsd string, som interface{}, some
 	}
 
 	var result bson.D
-	if err = coll.FindOne(context.TODO(), f).Decode(&result); err != nil {
+	if err = db.collection.FindOne(context.TODO(), f).Decode(&result); err != nil {
 		return nil, err
 	}
 	return results, nil
@@ -96,8 +96,8 @@ func (db Db_mongo) Db_FindALLD(dfkdf string, asdsd string, som interface{}, some
 func (db Db_mongo) Db_FindALLM(dfkdf string, something interface{}, merify string) ([]primitive.M, error) {
 
 	f := bson.M{dfkdf: bson.M{merify: something}}
-	coll := db.collection
-	axc, err := coll.Find(context.TODO(), f)
+
+	axc, err := db.collection.Find(context.TODO(), f)
 	var results []bson.M
 	if err != nil {
 		fmt.Print(err)
@@ -107,14 +107,14 @@ func (db Db_mongo) Db_FindALLM(dfkdf string, something interface{}, merify strin
 	}
 
 	var result bson.M
-	if err = coll.FindOne(context.TODO(), f).Decode(&result); err != nil {
+	if err = db.collection.FindOne(context.TODO(), f).Decode(&result); err != nil {
 		return nil, err
 	}
 	return results, nil
 }
 func (db Db_mongo) Db_Delete(something interface{}) error {
-	coll := db.collection
-	f, err := coll.DeleteOne(context.TODO(), something)
+
+	f, err := db.collection.DeleteOne(context.TODO(), something)
 	fmt.Print(f)
 	//.Remove(something)
 	return err
