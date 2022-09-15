@@ -55,5 +55,13 @@ func Login(c *gin.Context) {
 }
 func SETProfile(c *gin.Context) {
 
-	SET.SETProfile(c,s)
+	SET.SETProfile(c, s)
+}
+func SETMarkdown(c *gin.Context) {
+
+	SET.SETMarkdown(c, s)
+}
+func SETGithub(c *gin.Context) {
+
+	SET.SETGithub(c, s)
 }

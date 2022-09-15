@@ -26,12 +26,12 @@ func GenerateToken(c *gin.Context, Tag, key string, stats string, otp int64) (st
 
 	return ss, err
 }
-func GenerateTokenReg(c *gin.Context, Tag, key, email, stats string, otp int64) (string, error) {
+func GenerateTokenReg(c *gin.Context, Tag, key, email, stats string) (string, error) {
 	token := jwt.NewWithClaims(
 		jwt.SigningMethodHS512,
 		&jwt.StandardClaims{
-			Audience:  key,
-			IssuedAt:  otp,
+			Audience: key,
+
 			Id:        Tag,
 			Issuer:    email,
 			Subject:   stats,

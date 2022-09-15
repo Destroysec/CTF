@@ -56,6 +56,8 @@ func main() {
 	api.POST("/q", lm.Middleware(), p.M)
 	api.POST("/verifyotp", lm.Middleware(), p.Verifyotp_func)
 	api.POST("/setProfile", p.SETProfile)
+	api.POST("/setMarkdown", p.SETMarkdown)
+	api.POST("/setGithub", p.SETGithub)
 	//apilogin.GET("/Check", p.C)
 	r.Run(":9000")
 

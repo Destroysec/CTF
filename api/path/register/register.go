@@ -68,7 +68,7 @@ func Register(c *gin.Context, s db.Db_mongo, am gmail.GAmll) {
 			Ax := r.RandomOTP(6)
 			go h.AsyncMhash(Ax, hss)
 			t := time.Now().Format("2006-01-02 15:04:05")
-			g, _ := jwt.GenerateTokenReg(c, tag, fromreg.Username, fromreg.Email, t, int64(60456))
+			g, _ := jwt.GenerateTokenReg(c, tag, fromreg.Username, fromreg.Email, t)
 			go h.AsyncMhash(g, hs)
 			go saveDAta(s, fromreg.Email, fromreg.Password, fromreg.Username, tag, <-hs+" "+<-hss, t)
 			go am.SEndlogin(fromreg.Username, tag, Ax, fromreg.Email)

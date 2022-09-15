@@ -55,7 +55,7 @@ func Verifyotp(c *gin.Context, s db.Db_mongo) {
 		split = strings.Split(some[0].Map()["SessionOTP"].(string), " ")
 		go h.Vcheck(split[1], Ax.OTP, checkotp)
 
-		g, _ := j.GenerateTokenReg(c, some[0].Map()["tag"].(string), some[0].Map()["username"].(string), some[0].Map()["email"].(string), tn, int64(60456))
+		g, _ := j.GenerateTokenReg(c, some[0].Map()["tag"].(string), some[0].Map()["username"].(string), some[0].Map()["email"].(string), tn)
 		go h.AsyncMhash(g, hashjwt)
 		fddf := <-checkotp
 		if fddf {
@@ -83,7 +83,7 @@ func Verifyotp(c *gin.Context, s db.Db_mongo) {
 		}
 		go h.Vcheck(split[1], Ax.OTP, checkotp)
 
-		g, _ := j.GenerateTokenReg(c, some[0].Map()["tag"].(string), some[0].Map()["username"].(string), some[0].Map()["email"].(string), tn, int64(60456))
+		g, _ := j.GenerateTokenReg(c, some[0].Map()["tag"].(string), some[0].Map()["username"].(string), some[0].Map()["email"].(string), tn)
 		go h.AsyncMhash(g, hashjwt)
 		if <-checkotp {
 			session := make(map[string]string)
