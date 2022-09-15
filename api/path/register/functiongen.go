@@ -29,7 +29,7 @@ func Ganuserid(s db.Db_mongo) string {
 	for {
 
 		id := r.Randomid(13)
-		some := make(chan primitive.D)
+		some := make(chan primitive.D, 100)
 		go s.Db_FindtOne("userid", string(id), some)
 		ax := <-some
 

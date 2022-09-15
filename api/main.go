@@ -55,7 +55,7 @@ func main() {
 	apilogin.POST("/reg", lm.Middleware(), p.Register)
 	api.POST("/q", lm.Middleware(), p.M)
 	api.POST("/verifyotp", lm.Middleware(), p.Verifyotp_func)
-
+	api.POST("/setProfile", p.SETProfile)
 	//apilogin.GET("/Check", p.C)
 	r.Run(":9000")
 

@@ -5,7 +5,7 @@ import (
 	"api/gmail"
 	p "api/path/login"
 	Pa "api/path/register"
-
+	SET "api/path/setting_edit"
 	v "api/path/verify_gmail"
 	config "api/setting"
 
@@ -52,4 +52,8 @@ func Register(c *gin.Context) {
 func Login(c *gin.Context) {
 
 	p.Login(c, s, am)
+}
+func SETProfile(c *gin.Context) {
+
+	SET.SETProfile(c,s)
 }
