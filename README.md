@@ -1,11 +1,38 @@
 # CTF
 
 # backend tasks
-* Auth
-  * suss-Register
-  * suss-login
-  * suss-2fa
+**[Docs backend]()**
+
+**pentest แล้วถ้าเจอช่องโหว่commentไว้หลัง tasks list**
+
+### Example 
+
+* TEST
+  * [x] TEST TASK >__sql injection__
+
+---
+* Auth succeed
+  * [x] Register
+  * [x] login
+  * [x] 2fa
 * Setting
-  * alpha-Set_Profile
-  * bata-Set_MarkDown
-  * suss-Set_Github
+  * [x] Set_Profile
+  * [x] Set_MarkDown
+  * [x] Set_Github
+  * [ ] rename
+  * [ ] reset password
+  * [ ] password change
+* donate
+  * [ ] truewallet
+* captcha
+  * [ ] captcha
+* lab 
+  * [ ] normal
+  * [ ] lab
+* vpn
+  * [ ] vpn
+* websocket
+  * [ ] realtime score
+* other (not now)
+  * [ ] group attack
+  * [ ] war(multiplayer)
