@@ -9,7 +9,7 @@ Python
 # production
 /build
 /IMG
-/Markdown
+/MarkDown
 api/config.yml
 # misc
 .DS_Store
