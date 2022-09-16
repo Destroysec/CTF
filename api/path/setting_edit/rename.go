@@ -40,7 +40,10 @@ func REname(c *gin.Context, s db.Db_mongo) {
 	var ln name
 	cha := make(chan primitive.D)
 	dds := make(chan bool)
-	err := c.BindJSON(&ln)
+	if err := c.BindJSON(&ln); err != nil {
+		c.AbortWithStatus(505)
+		return
+	}
 	tokenHeader := c.Request.Header.Get("jwt")
 
 	key, err := d.DecodeToken(tokenHeader)
