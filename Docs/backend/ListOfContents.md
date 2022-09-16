@@ -1,7 +1,7 @@
 # API DOCS
 
 * Initialize
-    * [Start]()
+    * [Start](https://github.com/Destroysec/CTF/blob/main/Docs/backend/Initialize_Docs/Start.md)
 
 * Auth 
     * [Register](https://github.com/Destroysec/CTF/tree/main/Docs/backend/Auth_Docs/register.md)
