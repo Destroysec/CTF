@@ -58,15 +58,10 @@ func main() {
 	api.POST("/setProfile", p.SETProfile)
 	api.POST("/setMarkdown", p.SETMarkdown)
 	api.POST("/setGithub", p.SETGithub)
+	api.POST("/rename", p.Rename)
 	//apilogin.GET("/Check", p.C)
 	r.Run(":9000")
 
 	// listen and serve on 0.0.0.0:9000 (for windows "localhost:9000")
-	/*
-		#Example
-		import requets
-		requets.post("localhost:9000/q",data={"leve":"1","ams":"hackerman"})
-
-	*/
 
 }

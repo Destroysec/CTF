@@ -25,7 +25,9 @@ func contains(slice []string, item string) bool {
 }
 
 func SETProfile(c *gin.Context, s db.Db_mongo) {
-	file, err := c.FormFile("file")
+	c.Request.Body = http.MaxBytesReader(c.Writer, c.Request.Body, 10*1024*1024)
+	h, file, err := c.Request.FormFile("file")
+	defer h.Close()
 	tokenHeader := c.Request.Header.Get("jwt")
 	key, err := d.DecodeToken(tokenHeader)
 	if err != nil {

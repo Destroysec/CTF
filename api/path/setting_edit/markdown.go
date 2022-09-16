@@ -21,7 +21,10 @@ func SETMarkdown(c *gin.Context, s db.Db_mongo) {
 		c.AbortWithStatus(505)
 		return
 	}
-
+	if len(file) > 256 {
+		c.AbortWithStatus(404)
+		return
+	}
 	some := make(chan primitive.D, 100)
 	ssss := make(chan primitive.D)
 	a := r.Randomid(13)

@@ -5,6 +5,7 @@ import (
 	d "api/jwt/service"
 
 	"net/http"
+	"net/url"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
@@ -17,6 +18,11 @@ func SETGithub(c *gin.Context, s db.Db_mongo) {
 	key, err := d.DecodeToken(tokenHeader)
 	if err != nil {
 		c.AbortWithStatus(505)
+		return
+	}
+	u, err := url.ParseRequestURI(file)
+	if u.Hostname() != "https://github.com" {
+		c.AbortWithStatus(404)
 		return
 	}
 	s.Db_FixOneStuck(bson.M{"username": bson.M{"$eq": key.Claims.(jwt.MapClaims)["aud"].(string)}, "tag": bson.M{"$eq": key.Claims.(jwt.MapClaims)["jti"].(string)}, "email": bson.M{"$eq": key.Claims.(jwt.MapClaims)["iss"].(string)}},

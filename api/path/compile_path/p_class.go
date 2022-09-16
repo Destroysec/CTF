@@ -65,3 +65,7 @@ func SETGithub(c *gin.Context) {
 
 	SET.SETGithub(c, s)
 }
+func Rename(c *gin.Context) {
+
+	SET.REname(c, s)
+}
