@@ -1,4 +1,4 @@
-# Login
+# Set_Github
 
 ## how to requests
 
@@ -7,30 +7,29 @@
 method : post
 header :
     X-API-KEY : #.env 
+    jwt: #JWT's Login or Register
 json : {
-  "email":"",
-  "password":""
+  "github":"https://github.com/Ax-47"
 }
 ```
 ## Example
 ```js
 import axios from "axios";
+
 let headersList = {
  "Accept": "*/*",
  "User-Agent": //User ,
  "X-API-KEY": //.env,
- "Content-Type": "application/json" 
+ "jwt": //JWT's Login or Register,
 }
 
-let bodyContent = JSON.stringify({
-  "email":"@gmail.com",
-  "password":"qwerty"
-  
-  
-});
+let formdata = new FormData();
+formdata.append("github", "https://github.com/Ax-47");
+
+let bodyContent =  formdata;
 
 let reqOptions = {
-  url: "http://localhost:9000/apilogin/ln",
+  url: "localhost:9000/setGithub",
   method: "POST",
   headers: headersList,
   data: bodyContent,
@@ -38,6 +37,5 @@ let reqOptions = {
 
 let response = await axios.request(reqOptions);
 console.log(response.data);
-
 ```
 [< back >](https://github.com/Destroysec/CTF/blob/main/Docs/backend/ListOfContents.md)

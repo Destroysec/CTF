@@ -1,4 +1,4 @@
-# Login
+# Set_Profile
 
 ## how to requests
 
@@ -7,30 +7,31 @@
 method : post
 header :
     X-API-KEY : #.env 
+    jwt: #JWT's Login or Register
 json : {
-  "email":"",
-  "password":""
+  "file": C:\Users\img\profile.PNG,
+ 
 }
 ```
 ## Example
 ```js
 import axios from "axios";
+var fs = require('fs');
+
 let headersList = {
  "Accept": "*/*",
  "User-Agent": //User ,
  "X-API-KEY": //.env,
- "Content-Type": "application/json" 
+ "jwt": //JWT's Login or Register,
 }
 
-let bodyContent = JSON.stringify({
-  "email":"@gmail.com",
-  "password":"qwerty"
-  
-  
-});
+let formdata = new FormData();
+formdata.append("file", fs.createReadStream("C:\Users\img\profile.PNG"));
+
+let bodyContent =  formdata;
 
 let reqOptions = {
-  url: "http://localhost:9000/apilogin/ln",
+  url: "http://localhost:9000/setProfile",
   method: "POST",
   headers: headersList,
   data: bodyContent,
@@ -38,6 +39,5 @@ let reqOptions = {
 
 let response = await axios.request(reqOptions);
 console.log(response.data);
-
 ```
 [< back >](https://github.com/Destroysec/CTF/blob/main/Docs/backend/ListOfContents.md)
