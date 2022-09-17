@@ -20,7 +20,7 @@
   * [x] Set_Profile
   * [x] Set_MarkDown
   * [x] Set_Github
-  * [ ] rename
+  * [x] rename
   * [ ] reset password
   * [ ] password change
 * donate
