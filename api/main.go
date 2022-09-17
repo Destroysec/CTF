@@ -51,6 +51,7 @@ func main() {
 	})
 	api := r.Group("/", M.AuthorizationMiddleware)
 	apilogin := r.Group("/apilogin")
+
 	apilogin.POST("/ln", lm.Middleware(), p.Login) //fix this
 	apilogin.POST("/reg", lm.Middleware(), p.Register)
 	api.POST("/q", lm.Middleware(), p.M)
@@ -59,6 +60,7 @@ func main() {
 	api.POST("/setMarkdown", p.SETMarkdown)
 	api.POST("/setGithub", p.SETGithub)
 	api.POST("/rename", p.Rename)
+	api.POST("/changepassword", p.ChangePassword)
 	//apilogin.GET("/Check", p.C)
 	r.Run(":9000")
 
