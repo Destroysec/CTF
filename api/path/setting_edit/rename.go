@@ -56,9 +56,7 @@ func REname(c *gin.Context, s db.Db_mongo) {
 	}
 	asas := <-dds
 	if !(asas) {
-		c.JSON(405, gin.H{
-			"message": asas,
-		})
+		c.AbortWithStatus(405)
 
 		return
 	}

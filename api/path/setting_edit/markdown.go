@@ -49,8 +49,10 @@ func SETMarkdown(c *gin.Context, s db.Db_mongo) {
 	}
 
 	s.Db_FixOneStuck(bson.M{"username": bson.M{"$eq": key.Claims.(jwt.MapClaims)["aud"].(string)}, "tag": bson.M{"$eq": key.Claims.(jwt.MapClaims)["jti"].(string)}, "email": bson.M{"$eq": key.Claims.(jwt.MapClaims)["iss"].(string)}},
-		bson.M{"$set": bson.M{"Markdown": "/Markdown/" + a + ".md"}})
+		bson.M{"$set": bson.M{"subdata.markdown": "/Markdown/" + a + ".md"}})
 	// File saved successfully. Return proper result
+	// bson.M{"subdata": bson.M{"Markdown": /Markdown/" + a + ".md"}
+	//
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Your file has been successfully uploaded.",
 	})

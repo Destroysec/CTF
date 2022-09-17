@@ -68,8 +68,9 @@ func SETProfile(c *gin.Context, s db.Db_mongo) {
 	}
 
 	s.Db_FixOneStuck(bson.M{"username": bson.M{"$eq": key.Claims.(jwt.MapClaims)["aud"].(string)}, "tag": bson.M{"$eq": key.Claims.(jwt.MapClaims)["jti"].(string)}, "email": bson.M{"$eq": key.Claims.(jwt.MapClaims)["iss"].(string)}},
-		bson.M{"$set": bson.M{"Profile": "/IMG/" + a + extension}})
+		bson.M{"$set": bson.M{"subdata.profile": "/IMG/" + a + extension}})
 	// File saved successfully. Return proper result
+
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Your file has been successfully uploaded.",
 	})

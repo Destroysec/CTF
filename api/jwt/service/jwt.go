@@ -35,7 +35,7 @@ func GenerateTokenReg(c *gin.Context, Tag, key, email, stats string) (string, er
 			Id:        Tag,
 			Issuer:    email,
 			Subject:   stats,
-			ExpiresAt: time.Now().Add(5 * time.Minute).Unix(),
+			ExpiresAt: time.Now().Add(31 * 6 * 24 * 60 * time.Minute).Unix(),
 		})
 
 	ss, err := token.SignedString([]byte("MySignature"))

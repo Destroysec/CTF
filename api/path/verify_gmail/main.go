@@ -59,13 +59,12 @@ func Verifyotp(c *gin.Context, s db.Db_mongo) {
 		go h.AsyncMhash(g, hashjwt)
 		fddf := <-checkotp
 		if fddf {
-			session := make(map[string]string)
+
 			asdsa := <-hashjwt
-			session[tn] = asdsa
+
 			go s.Db_FixOneStuck(bson.M{"email": bson.M{"$eq": some[0].Map()["email"].(string)}},
-				bson.M{"$push": bson.M{"sessionauthor": session}})
-			s.RemoveArray(bson.M{"email": bson.M{"$eq": some[0].Map()["email"].(string)}},
-				bson.M{"$set": bson.M{"SessionOTP": some[0].Map()["SessionOTP"].(string)}})
+				bson.M{"$set": bson.M{"sessionauthor" + "." + tn: asdsa}})
+
 			c.JSON(200, gin.H{
 				"message": "req okay",
 				"s":       g,
@@ -86,16 +85,13 @@ func Verifyotp(c *gin.Context, s db.Db_mongo) {
 		g, _ := j.GenerateTokenReg(c, some[0].Map()["tag"].(string), some[0].Map()["username"].(string), some[0].Map()["email"].(string), tn)
 		go h.AsyncMhash(g, hashjwt)
 		if <-checkotp {
-			session := make(map[string]string)
-			go SaveDAta(s, some[0].Map()["email"].(string), some[0].Map()["subdata"].(primitive.D).Map()["password"].(string), some[0].Map()["username"].(string), some[0].Map()["tag"].(string), some[0].Map()["time"].(string), some[0].Map()["userid"].(string), g, tn)
+			asdsa := <-hashjwt
+			SaveDAta(s, some[0].Map()["email"].(string), some[0].Map()["subdata"].(primitive.D).Map()["password"].(string), some[0].Map()["username"].(string), some[0].Map()["tag"].(string), some[0].Map()["time"].(string), some[0].Map()["userid"].(string), g, tn)
 
 			go s.Db_Delete_UniDentify(bson.M{"email": bson.M{"$eq": some[0].Map()["email"].(string)}})
-			session[tn] = <-hashjwt
-			s.Db_FixOneStuck_UniDentify(bson.M{
-				"email": bson.M{
-					"$eq": some[0].Map()["email"].(string),
-				},
-			}, bson.M{"$push": bson.M{"sessionauthor": session}})
+
+			go s.Db_FixOneStuck(bson.M{"email": bson.M{"$eq": some[0].Map()["email"].(string)}},
+				bson.M{"$set": bson.M{"sessionauthor" + "." + tn: asdsa}})
 			c.JSON(200, gin.H{
 				"message": "req okay",
 				"s":       g,

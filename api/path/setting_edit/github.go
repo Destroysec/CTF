@@ -21,12 +21,12 @@ func SETGithub(c *gin.Context, s db.Db_mongo) {
 		return
 	}
 	u, err := url.ParseRequestURI(file)
-	if u.Hostname() != "https://github.com" {
+	if u.Hostname() != "github.com" {
 		c.AbortWithStatus(404)
 		return
 	}
 	s.Db_FixOneStuck(bson.M{"username": bson.M{"$eq": key.Claims.(jwt.MapClaims)["aud"].(string)}, "tag": bson.M{"$eq": key.Claims.(jwt.MapClaims)["jti"].(string)}, "email": bson.M{"$eq": key.Claims.(jwt.MapClaims)["iss"].(string)}},
-		bson.M{"$set": bson.M{"Github": file}})
+		bson.M{"$set": bson.M{"subdata.Github": file}})
 	// File saved successfully. Return proper result
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Your file has been successfully uploaded.",

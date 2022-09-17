@@ -5,6 +5,7 @@ import (
 	"api/gmail"
 	h "api/hash_class"
 	jwt "api/jwt/service"
+	"fmt"
 
 	r "api/random"
 	"time"
@@ -38,9 +39,9 @@ func Login(c *gin.Context, s db.Db_mongo, am gmail.GAmll) {
 	go s.Db_FindtOne("email", fromreg.Email, cha)
 	password := fromreg.Password
 	key := <-cha
+	fmt.Println(key)
 	if key != nil {
 		ds := make(chan bool)
-
 		go h.Vcheck(key.Map()["subdata"].(primitive.D).Map()["password"].(string), password, ds)
 		if <-ds {
 

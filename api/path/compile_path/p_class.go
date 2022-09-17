@@ -69,3 +69,7 @@ func Rename(c *gin.Context) {
 
 	SET.REname(c, s)
 }
+func ChangePassword(c *gin.Context) {
+
+	SET.ChangePassword(c, s)
+}
