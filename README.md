@@ -21,8 +21,8 @@
   * [x] Set_MarkDown
   * [x] Set_Github
   * [x] rename
-  * [ ] reset password
-  * [ ] password change
+  * [x] reset password
+  * [x] password change
 * donate
   * [ ] truewallet
 * captcha
