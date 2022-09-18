@@ -50,12 +50,16 @@ func Verifyotp(c *gin.Context, s db.Db_mongo) {
 	some, e := s.Db_FindALLunD("username", "tag", a.Claims.(jwt.MapClaims)["jti"].(string), a.Claims.(jwt.MapClaims)["aud"].(string))
 
 	if e != nil {
-		some, _ = s.Db_FindALLD("username", "tag", a.Claims.(jwt.MapClaims)["jti"].(string), a.Claims.(jwt.MapClaims)["aud"].(string))
-
+		some, e = s.Db_FindALLD("username", "tag", a.Claims.(jwt.MapClaims)["jti"].(string), a.Claims.(jwt.MapClaims)["aud"].(string))
+		if e != nil {
+			c.JSON(404, gin.H{
+				"message": "fill s",
+			})
+		}
 		split = strings.Split(some[0].Map()["SessionOTP"].(string), " ")
 		go h.Vcheck(split[1], Ax.OTP, checkotp)
 
-		g, _ := j.GenerateTokenReg(c, some[0].Map()["tag"].(string), some[0].Map()["username"].(string), some[0].Map()["email"].(string), tn)
+		g, _ := j.GenerateTokenV(c, some[0].Map()["tag"].(string), some[0].Map()["username"].(string), tn, some[0].Map()["email"].(string), int64(222))
 		go h.AsyncMhash(g, hashjwt)
 		fddf := <-checkotp
 		if fddf {
@@ -82,14 +86,12 @@ func Verifyotp(c *gin.Context, s db.Db_mongo) {
 		}
 		go h.Vcheck(split[1], Ax.OTP, checkotp)
 
-		g, _ := j.GenerateTokenReg(c, some[0].Map()["tag"].(string), some[0].Map()["username"].(string), some[0].Map()["email"].(string), tn)
+		g, _ := j.GenerateTokenV(c, some[0].Map()["tag"].(string), some[0].Map()["username"].(string), tn, some[0].Map()["email"].(string), int64(222))
 		go h.AsyncMhash(g, hashjwt)
 		if <-checkotp {
 			asdsa := <-hashjwt
 			SaveDAta(s, some[0].Map()["email"].(string), some[0].Map()["subdata"].(primitive.D).Map()["password"].(string), some[0].Map()["username"].(string), some[0].Map()["tag"].(string), some[0].Map()["time"].(string), some[0].Map()["userid"].(string), g, tn)
-
 			go s.Db_Delete_UniDentify(bson.M{"email": bson.M{"$eq": some[0].Map()["email"].(string)}})
-
 			go s.Db_FixOneStuck(bson.M{"email": bson.M{"$eq": some[0].Map()["email"].(string)}},
 				bson.M{"$set": bson.M{"sessionauthor" + "." + tn: asdsa}})
 			c.JSON(200, gin.H{
@@ -102,7 +104,7 @@ func Verifyotp(c *gin.Context, s db.Db_mongo) {
 				"email": bson.M{
 					"$eq": some[0].Map()["email"].(string),
 				},
-			}, bson.M{"$set": bson.M{"count": some[0].Map()["count"].(int32) + 1}})
+			}, bson.M{"$inc": bson.M{"count": 1}})
 			c.JSON(401, gin.H{
 				"message": "fild",
 			})

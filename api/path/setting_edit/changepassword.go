@@ -5,8 +5,6 @@ import (
 	d "api/jwt/service"
 
 	h "api/hash_class"
-	// r "api/random"
-	// "net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"

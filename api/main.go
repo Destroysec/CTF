@@ -2,7 +2,7 @@ package main
 
 import (
 	//jwt "api/jwt/service"
-	M "api/Middleware"
+
 	p "api/path/compile_path"
 	rr "api/random"
 	"errors"
@@ -49,18 +49,22 @@ func main() {
 		}
 		return "", errors.New("API key is missing")
 	})
-	api := r.Group("/", M.AuthorizationMiddleware)
-	apilogin := r.Group("/apilogin")
+	api := r.Group("/")
+	apilogin := r.Group("/Auth", lm.Middleware())
+	setting := r.Group("/Setting", lm.Middleware(), p.MS)
+	apilogin.POST("/ln", p.Login) //fix this
+	apilogin.POST("/reg", p.Register)
+	apilogin.POST("/verifyotp", p.Verifyotp_func)
 
-	apilogin.POST("/ln", lm.Middleware(), p.Login) //fix this
-	apilogin.POST("/reg", lm.Middleware(), p.Register)
-	api.POST("/q", lm.Middleware(), p.M)
-	api.POST("/verifyotp", lm.Middleware(), p.Verifyotp_func)
-	api.POST("/setProfile", p.SETProfile)
-	api.POST("/setMarkdown", p.SETMarkdown)
-	api.POST("/setGithub", p.SETGithub)
-	api.POST("/rename", p.Rename)
-	api.POST("/changepassword", p.ChangePassword)
+	setting.POST("/q", lm.Middleware(), p.M)
+	setting.POST("/setProfile", p.SETProfile)
+	setting.POST("/setMarkdown", p.SETMarkdown)
+	setting.POST("/setGithub", p.SETGithub)
+	setting.POST("/rename", p.Rename)
+	setting.POST("/changepassword", p.ChangePassword)
+	setting.POST("/reset", p.Sendreset)
+
+	api.GET("/callBack/:username", p.Callback)
 	//apilogin.GET("/Check", p.C)
 	r.Run(":9000")
 

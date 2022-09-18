@@ -1,6 +1,7 @@
 package path
 
 import (
+	"api/Middleware"
 	db "api/db"
 	"api/gmail"
 	p "api/path/login"
@@ -72,4 +73,17 @@ func Rename(c *gin.Context) {
 func ChangePassword(c *gin.Context) {
 
 	SET.ChangePassword(c, s)
+}
+func Sendreset(c *gin.Context) {
+
+	SET.SendURL(c, s, am)
+}
+func Callback(c *gin.Context) {
+
+	SET.CheckURL(c, s)
+}
+
+// middleware
+func MS(c *gin.Context) {
+	Middleware.MiddlewareSETTING(c, s)
 }

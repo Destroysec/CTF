@@ -10,15 +10,15 @@ import (
 )
 
 //jwt service
-func GenerateToken(c *gin.Context, Tag, key string, stats string, otp int64) (string, error) {
+func GenerateToken(c *gin.Context, Tag, name, tisme, email string, sta int64) (string, error) {
 	token := jwt.NewWithClaims(
 		jwt.SigningMethodHS512,
 		&jwt.StandardClaims{
-			Audience: key,
-			IssuedAt: otp,
-			Id:       Tag,
-			//Issuer:
-			Subject:   stats,
+			Audience:  name,
+			IssuedAt:  sta,
+			Id:        Tag,
+			Issuer:    email,
+			Subject:   tisme,
 			ExpiresAt: time.Now().Add(5 * time.Minute).Unix(),
 		})
 
@@ -26,15 +26,31 @@ func GenerateToken(c *gin.Context, Tag, key string, stats string, otp int64) (st
 
 	return ss, err
 }
-func GenerateTokenReg(c *gin.Context, Tag, key, email, stats string) (string, error) {
+func GenerateTokenReg(c *gin.Context, Tag, name, tisme, email string, sta int64) (string, error) {
 	token := jwt.NewWithClaims(
 		jwt.SigningMethodHS512,
 		&jwt.StandardClaims{
-			Audience: key,
-
+			Audience:  name,
+			IssuedAt:  sta,
 			Id:        Tag,
 			Issuer:    email,
-			Subject:   stats,
+			Subject:   tisme,
+			ExpiresAt: time.Now().Add(5 * time.Minute).Unix(),
+		})
+
+	ss, err := token.SignedString([]byte("MySignature"))
+
+	return ss, err
+}
+func GenerateTokenV(c *gin.Context, Tag, name, tisme, email string, sta int64) (string, error) {
+	token := jwt.NewWithClaims(
+		jwt.SigningMethodHS512,
+		&jwt.StandardClaims{
+			Audience:  name,
+			IssuedAt:  sta,
+			Id:        Tag,
+			Issuer:    email,
+			Subject:   tisme,
 			ExpiresAt: time.Now().Add(31 * 6 * 24 * 60 * time.Minute).Unix(),
 		})
 
