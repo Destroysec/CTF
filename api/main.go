@@ -57,12 +57,12 @@ func main() {
 	apilogin.POST("/verifyotp", p.Verifyotp_func)
 
 	setting.POST("/q", lm.Middleware(), p.M)
-	setting.POST("/setProfile", p.SETProfile)
-	setting.POST("/setMarkdown", p.SETMarkdown)
-	setting.POST("/setGithub", p.SETGithub)
-	setting.POST("/rename", p.Rename)
-	setting.POST("/changepassword", p.ChangePassword)
-	setting.POST("/reset", p.Sendreset)
+	setting.POST("/setProfile", lm.Middleware(), p.SETProfile)
+	setting.POST("/setMarkdown", lm.Middleware(), p.SETMarkdown)
+	setting.POST("/setGithub", lm.Middleware(), p.SETGithub)
+	setting.POST("/rename", lm.Middleware(), p.Rename)
+	setting.POST("/changepassword", lm.Middleware(), p.ChangePassword)
+	setting.POST("/reset", lm.Middleware(), p.Sendreset)
 
 	api.GET("/callBack/:username", p.Callback)
 	//apilogin.GET("/Check", p.C)

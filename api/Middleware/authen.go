@@ -36,8 +36,6 @@ func MiddlewareSETTING(c *gin.Context, s db.Db_mongo) {
 		c.AbortWithStatus(404)
 		return
 	}
-	fmt.Println(fsd[0])
-	fmt.Println(fsd[0])
 	go h.Vcheck(fsd[0].Map()["sessionauthor"].(primitive.D).Map()[key.Claims.(jwt.MapClaims)["sub"].(string)].(string), ds, adf)
 	if !(<-adf) {
 		c.AbortWithStatus(504)
