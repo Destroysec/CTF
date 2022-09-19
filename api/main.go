@@ -51,7 +51,7 @@ func main() {
 	})
 	api := r.Group("/")
 	apilogin := r.Group("/Auth", lm.Middleware())
-	setting := r.Group("/Setting", lm.Middleware(), p.MS)
+	setting := r.Group("/Setting", p.MS)
 	apilogin.POST("/ln", p.Login) //fix this
 	apilogin.POST("/reg", p.Register)
 	apilogin.POST("/verifyotp", p.Verifyotp_func)

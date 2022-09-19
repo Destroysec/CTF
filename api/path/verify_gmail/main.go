@@ -46,7 +46,7 @@ func Verifyotp(c *gin.Context, s db.Db_mongo) {
 	hashjwt := make(chan string)
 	var split []string
 
-	tn := time.Now().Format("2006-01-02 15:04:05")
+	tn := time.Now().Format("2006_01_02_15_04_05")
 	some, e := s.Db_FindALLunD("username", "tag", a.Claims.(jwt.MapClaims)["jti"].(string), a.Claims.(jwt.MapClaims)["aud"].(string))
 
 	if e != nil {
@@ -67,7 +67,7 @@ func Verifyotp(c *gin.Context, s db.Db_mongo) {
 			asdsa := <-hashjwt
 
 			go s.Db_FixOneStuck(bson.M{"email": bson.M{"$eq": some[0].Map()["email"].(string)}},
-				bson.M{"$set": bson.M{"sessionauthor" + "." + tn: asdsa}})
+				bson.M{"$set": bson.M{"sessionauthor." + tn: asdsa}})
 
 			c.JSON(200, gin.H{
 				"message": "req okay",
@@ -93,7 +93,7 @@ func Verifyotp(c *gin.Context, s db.Db_mongo) {
 			SaveDAta(s, some[0].Map()["email"].(string), some[0].Map()["subdata"].(primitive.D).Map()["password"].(string), some[0].Map()["username"].(string), some[0].Map()["tag"].(string), some[0].Map()["time"].(string), some[0].Map()["userid"].(string), g, tn)
 			go s.Db_Delete_UniDentify(bson.M{"email": bson.M{"$eq": some[0].Map()["email"].(string)}})
 			go s.Db_FixOneStuck(bson.M{"email": bson.M{"$eq": some[0].Map()["email"].(string)}},
-				bson.M{"$set": bson.M{"sessionauthor" + "." + tn: asdsa}})
+				bson.M{"$set": bson.M{"sessionauthor." + tn: asdsa}})
 			c.JSON(200, gin.H{
 				"message": "req okay",
 				"s":       g,
