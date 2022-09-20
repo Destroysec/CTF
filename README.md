@@ -15,7 +15,7 @@
 * Auth succeed
   * [x] Register
   * [x] login
-  * [ ] logout
+  * [X] logout
   * [x] 2fa
 * Setting
   * [x] Set_Profile
