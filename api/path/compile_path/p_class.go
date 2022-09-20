@@ -5,6 +5,7 @@ import (
 	db "api/db"
 	"api/gmail"
 	p "api/path/login"
+	"api/path/logout"
 	Pa "api/path/register"
 	SET "api/path/setting_edit"
 	v "api/path/verify_gmail"
@@ -53,6 +54,11 @@ func Register(c *gin.Context) {
 func Login(c *gin.Context) {
 
 	p.Login(c, s, am)
+}
+
+func Logout(c *gin.Context) {
+
+	logout.Logout(c, s)
 }
 func SETProfile(c *gin.Context) {
 

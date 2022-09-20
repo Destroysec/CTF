@@ -46,7 +46,7 @@ func Verifyotp(c *gin.Context, s db.Db_mongo) {
 	hashjwt := make(chan string)
 	var split []string
 
-	tn := time.Now().Format("2006_01_02_15_04_05")
+	tn := time.Now().Format("2006_01_02-15:04:05")
 	some, e := s.Db_FindALLunD("username", "tag", a.Claims.(jwt.MapClaims)["jti"].(string), a.Claims.(jwt.MapClaims)["aud"].(string))
 
 	if e != nil {

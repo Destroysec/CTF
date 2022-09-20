@@ -55,6 +55,7 @@ func main() {
 	apilogin.POST("/ln", p.Login) //fix this
 	apilogin.POST("/reg", p.Register)
 	apilogin.POST("/verifyotp", p.Verifyotp_func)
+	apilogin.POST("/logout", p.Logout)
 
 	setting.POST("/q", lm.Middleware(), p.M)
 	setting.POST("/setProfile", lm.Middleware(), p.SETProfile)
