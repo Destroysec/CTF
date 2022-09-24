@@ -52,6 +52,7 @@ func main() {
 	api := r.Group("/")
 	apilogin := r.Group("/Auth", lm.Middleware())
 	setting := r.Group("/Setting", p.MS)
+	PAY := r.Group("/PAy", lm.Middleware())
 	apilogin.POST("/ln", p.Login) //fix this
 	apilogin.POST("/reg", p.Register)
 	apilogin.POST("/verifyotp", p.Verifyotp_func)
@@ -64,6 +65,8 @@ func main() {
 	setting.POST("/rename", lm.Middleware(), p.Rename)
 	setting.POST("/changepassword", lm.Middleware(), p.ChangePassword)
 	setting.POST("/reset", lm.Middleware(), p.Sendreset)
+
+	PAY.POST("/", p.Sendreset)
 
 	api.GET("/callBack/:username", p.Callback)
 	api.GET("/Profile/:ID", p.Dassh)
