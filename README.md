@@ -8,10 +8,12 @@
 ### Example 
 
 * TEST
-  * [x] TEST TASK >__sql injection__
+  * [x] TEST TASK > __sql injection__
 
 ---
+
 ### tasklist
+
 * Auth succeed
   * [x] Register
   * [x] login
@@ -24,7 +26,8 @@
   * [x] rename
   * [x] reset password
   * [x] password change
-* donate
+  * [x] Profile
+* Pay
   * [ ] truewallet
 * captcha
   * [ ] captcha
@@ -35,9 +38,12 @@
   * [ ] vpn
 * websocket
   * [ ] realtime score
+
 * other (not now)
+  * [ ] friends
+  * [ ] ranking
+  * [ ] Forum
   * [ ] group attack
   * [ ] war(multiplayer)
-
 
 # frontend
