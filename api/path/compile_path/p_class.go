@@ -4,6 +4,7 @@ import (
 	"api/Middleware"
 	db "api/db"
 	"api/gmail"
+	Dash "api/path/Profile_Dash"
 	p "api/path/auth/login"
 	"api/path/auth/logout"
 	Pa "api/path/auth/register"
@@ -88,8 +89,10 @@ func Callback(c *gin.Context) {
 
 	SET.CheckURL(c, s)
 }
+func Dassh(c *gin.Context) {
+	Dash.Dash(c, s)
 
-// middleware
+} // middleware
 func MS(c *gin.Context) {
 	Middleware.MiddlewareSETTING(c, s)
 }

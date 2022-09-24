@@ -66,6 +66,7 @@ func main() {
 	setting.POST("/reset", lm.Middleware(), p.Sendreset)
 
 	api.GET("/callBack/:username", p.Callback)
+	api.GET("/Profile/:ID", p.Dassh)
 	//apilogin.GET("/Check", p.C)
 	r.Run(":9000")
 
