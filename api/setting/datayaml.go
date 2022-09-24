@@ -11,4 +11,7 @@ type Data_Config struct {
 		Collection   string
 		Recollection string
 	}
+	Pay struct {
+		Numberphone string
+	}
 }

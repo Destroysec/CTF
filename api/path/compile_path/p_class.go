@@ -4,6 +4,7 @@ import (
 	"api/Middleware"
 	db "api/db"
 	"api/gmail"
+	pay "api/path/Pay"
 	Dash "api/path/Profile_Dash"
 	p "api/path/auth/login"
 	"api/path/auth/logout"
@@ -18,13 +19,14 @@ import (
 
 var s db.Db_mongo
 var am gmail.GAmll
+var asd *config.Data_Config
 
 func init() {
 
-	so := config.Get_Config()
-	ztructDB := db.DBStarterConfig{DATA: so}
+	asd := config.Get_Config()
+	ztructDB := db.DBStarterConfig{DATA: asd}
 	s.Db_start(ztructDB)
-	am.LoginCon(so)
+	am.LoginCon(asd)
 }
 func M(c *gin.Context) {
 
@@ -92,7 +94,13 @@ func Callback(c *gin.Context) {
 func Dassh(c *gin.Context) {
 	Dash.Dash(c, s)
 
-} // middleware
+}
+func PAy(c *gin.Context) {
+	pay.Getgv(c, s, asd.Pay.Numberphone)
+
+}
+
+// middleware
 func MS(c *gin.Context) {
 	Middleware.MiddlewareSETTING(c, s)
 }
