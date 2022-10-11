@@ -13,5 +13,6 @@ type Data_Config struct {
 	}
 	Pay struct {
 		Numberphone string
+		Reql        string
 	}
 }

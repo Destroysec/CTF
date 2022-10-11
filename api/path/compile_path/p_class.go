@@ -23,7 +23,8 @@ var asd *config.Data_Config
 
 func init() {
 
-	asd := config.Get_Config()
+	asd = config.Get_Config()
+
 	ztructDB := db.DBStarterConfig{DATA: asd}
 	s.Db_start(ztructDB)
 	am.LoginCon(asd)
@@ -96,7 +97,7 @@ func Dassh(c *gin.Context) {
 
 }
 func PAy(c *gin.Context) {
-	pay.Getgv(c, s, asd.Pay.Numberphone)
+	pay.Getgv(c, s, asd.Pay.Numberphone, asd.Pay.Reql)
 
 }
 

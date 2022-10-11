@@ -23,3 +23,8 @@ yarn-debug.log*
 yarn-error.log*
 
 .env
+/test
+/lib
+**/*.exe
+api-type/node_modules
+api-type/main.js
