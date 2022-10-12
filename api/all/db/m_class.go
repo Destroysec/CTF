@@ -39,28 +39,3 @@ func (db *Db_mongo) Db_start(ztructDB DBStarterConfig) {
 	db.regcollection = client.Database("WEB").Collection(ztructDB.DATA.Database.Recollection)
 
 }
-
-type FormUD struct {
-	db     *Db_mongo
-	Insert struct{}
-}
-type FormUN struct {
-	db     *Db_mongo
-	Insert struct{}
-}
-type INSERTONE interface {
-	Db_insertOne()
-}
-
-func (F *FormUD) Db_insertOne() {
-	_, err := F.db.collection.InsertOne(context.TODO(), F.Insert)
-	if err != nil {
-		fmt.Print(err)
-	}
-}
-func (F *FormUN) Db_insertOne() {
-	_, err := F.db.regcollection.InsertOne(context.TODO(), F.Insert)
-	if err != nil {
-		fmt.Print(err)
-	}
-}

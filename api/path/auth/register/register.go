@@ -33,6 +33,7 @@ type DATA struct {
 
 func saveDAta(s db.Db_mongo, email, password, user, tag, SEss, time string) {
 	var post DATA
+	var f db.FormUN
 	post.Time = time
 	post.Email = email
 	post.Subdata.Password = h.Mhash(password)
@@ -42,8 +43,11 @@ func saveDAta(s db.Db_mongo, email, password, user, tag, SEss, time string) {
 	post.Tag = tag
 	post.Identifind = false
 	post.Count = 0
-	go s.Db_InsertOneS_UniDentify(post)
+	f.Db = &s
+	f.Insert = post
+	db.Db_insertOne(&f)
 	post = DATA{}
+	f = db.FormUN{}
 }
 
 func Register(c *gin.Context, s db.Db_mongo, am gmail.GAmll) {
@@ -53,11 +57,8 @@ func Register(c *gin.Context, s db.Db_mongo, am gmail.GAmll) {
 			"message": "err",
 		})
 	}
-
 	cha := make(chan primitive.D)
-
 	hs := make(chan string)
-	hss := make(chan string)
 	go s.Db_FindtOne("email", fromreg.Email, cha)
 
 	if fromreg.Password == fromreg.Repassword {
@@ -66,11 +67,11 @@ func Register(c *gin.Context, s db.Db_mongo, am gmail.GAmll) {
 			go s.Db_DeleteMany_UniDentify(bson.M{"email": bson.M{"$eq": fromreg.Email}})
 			tag := GanuserTag(s, fromreg.Username)
 			Ax := r.RandomOTP(6)
-			go h.AsyncMhash(Ax, hss)
+
 			t := time.Now().Format("2006-01-02 15:04:05")
 			g, _ := jwt.GenerateTokenReg(c, tag, fromreg.Username, t, fromreg.Email, int64(47))
-			go h.AsyncMhash(g, hs)
-			go saveDAta(s, fromreg.Email, fromreg.Password, fromreg.Username, tag, <-hs+" "+<-hss, t)
+			go h.AsyncMhash(g+" "+Ax, hs)
+			go saveDAta(s, fromreg.Email, fromreg.Password, fromreg.Username, tag, <-hs, t)
 			go am.SEndlogin(fromreg.Username, tag, Ax, fromreg.Email)
 
 			fromreg = Reg{}

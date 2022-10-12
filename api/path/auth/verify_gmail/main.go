@@ -6,7 +6,6 @@ import (
 	h "api/all/hash_class"
 
 	"fmt"
-	"strings"
 
 	j "api/all/jwt/service"
 	"time"
@@ -44,28 +43,25 @@ func Verifyotp(c *gin.Context, s db.Db_mongo) {
 	}
 
 	hashjwt := make(chan string)
-	var split []string
 
 	tn := time.Now().Format("2006_01_02-15:04:05")
 	some, e := s.Db_FindALLunD("username", "tag", a.Claims.(jwt.MapClaims)["jti"].(string), a.Claims.(jwt.MapClaims)["aud"].(string))
 
 	if e != nil {
+
 		some, e = s.Db_FindALLD("username", "tag", a.Claims.(jwt.MapClaims)["jti"].(string), a.Claims.(jwt.MapClaims)["aud"].(string))
-		if e != nil {
+
+		if e != nil || some[0].Map()["SessionOTP"] == nil {
 			c.JSON(404, gin.H{
 				"message": "fill s",
 			})
 		}
-		split = strings.Split(some[0].Map()["SessionOTP"].(string), " ")
-		go h.Vcheck(split[1], Ax.OTP, checkotp)
-
+		go h.Vcheck(some[0].Map()["SessionOTP"].(string), Ax.Jwt+" "+Ax.OTP, checkotp)
 		g, _ := j.GenerateTokenV(c, some[0].Map()["tag"].(string), some[0].Map()["username"].(string), tn, some[0].Map()["email"].(string), int64(222))
 		go h.AsyncMhash(g, hashjwt)
 		fddf := <-checkotp
 		if fddf {
-
 			asdsa := <-hashjwt
-
 			go s.Db_FixOneStuck(bson.M{"email": bson.M{"$eq": some[0].Map()["email"].(string)}},
 				bson.M{"$set": bson.M{"sessionauthor." + tn: asdsa}})
 
@@ -80,11 +76,11 @@ func Verifyotp(c *gin.Context, s db.Db_mongo) {
 		}
 
 	} else {
-		split := strings.Split(some[0].Map()["sessionreg"].(string), " ")
+
 		if some[0].Map()["count"].(int32) == 3 {
 			go s.Db_Delete_UniDentify(bson.M{"email": bson.M{"$eq": some[0].Map()["email"].(string)}})
 		}
-		go h.Vcheck(split[1], Ax.OTP, checkotp)
+		go h.Vcheck(some[0].Map()["sessionreg"].(string), Ax.Jwt+" "+Ax.OTP, checkotp)
 
 		g, _ := j.GenerateTokenV(c, some[0].Map()["tag"].(string), some[0].Map()["username"].(string), tn, some[0].Map()["email"].(string), int64(222))
 		go h.AsyncMhash(g, hashjwt)

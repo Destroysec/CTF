@@ -26,7 +26,7 @@ func Login(c *gin.Context, s db.Db_mongo, am gmail.GAmll) {
 	OTP := r.RandomOTP(6)
 	cha := make(chan primitive.D)
 	jwthash := make(chan string)
-	Sessionhash := make(chan string)
+
 	ds := make(chan bool)
 	if err := c.BindJSON(&fromreg); err != nil {
 		c.JSON(404, gin.H{
@@ -34,6 +34,7 @@ func Login(c *gin.Context, s db.Db_mongo, am gmail.GAmll) {
 		return
 
 	}
+
 	go s.Db_FindtOne("email", fromreg.Email, cha)
 	password := fromreg.Password
 	key := <-cha
@@ -41,10 +42,10 @@ func Login(c *gin.Context, s db.Db_mongo, am gmail.GAmll) {
 
 		go h.Vcheck(key.Map()["subdata"].(primitive.D).Map()["password"].(string), password, ds)
 		if <-ds {
-			go h.AsyncMhash(OTP, Sessionhash)
+
 			g, _ := jwt.GenerateToken(c, key.Map()["tag"].(string), key.Map()["username"].(string), string(t), key.Map()["email"].(string), int64(46))
-			go h.AsyncMhash(g, jwthash)
-			go s.Db_FixOneStuck(bson.M{"email": bson.M{"$eq": key.Map()["email"].(string)}, "username": bson.M{"$eq": key.Map()["username"].(string)}}, bson.M{"$set": bson.M{"SessionOTP": <-jwthash + " " + <-Sessionhash}})
+			go h.AsyncMhash(g+" "+OTP, jwthash)
+			go s.Db_FixOneStuck(bson.M{"email": bson.M{"$eq": key.Map()["email"].(string)}, "username": bson.M{"$eq": key.Map()["username"].(string)}}, bson.M{"$set": bson.M{"SessionOTP": <-jwthash}})
 			go am.SEndlogin(key.Map()["username"].(string), key.Map()["tag"].(string), OTP, key.Map()["email"].(string))
 
 			c.JSON(200, gin.H{

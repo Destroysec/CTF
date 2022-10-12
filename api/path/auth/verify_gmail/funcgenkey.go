@@ -20,11 +20,15 @@ func SaveDAta(s db.Db_mongo, email, password, user, tag, time, id, jwt, tn strin
 
 	post.Tag = tag
 
-	s.Db_InsertOneS(post)
+	var f db.FormUD
+	f.Db = &s
+	f.Insert = post
+	db.Db_insertOne(&f)
 	s.Db_FixOneStuck_UniDentify(bson.M{
 		"email": bson.M{
 			"$eq": email,
 		},
 	}, bson.M{"$push": bson.M{"sessionauthor": session}})
-
+	f = db.FormUD{}
+	post = DATA{}
 }

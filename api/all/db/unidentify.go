@@ -10,14 +10,6 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (db Db_mongo) Db_InsertOneS_UniDentify(Insert interface{}) {
-
-	_, err := db.regcollection.InsertOne(context.TODO(), Insert)
-	if err != nil {
-		fmt.Print(err)
-	}
-}
-
 //async find docs
 func (db Db_mongo) Db_FindtOne_UniDentify(dfkdf string, Username interface{}, c chan primitive.D) error {
 	var result bson.D
