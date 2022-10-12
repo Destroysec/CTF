@@ -10,14 +10,6 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (db Db_mongo) Db_InsertOne(Insert map[string]string) {
-
-	_, err := db.collection.InsertOne(context.TODO(), Insert)
-	if err != nil {
-		fmt.Print(err)
-	}
-}
-
 func (db Db_mongo) Db_FixOneStuck(filter, update interface{}) {
 
 	_, err := db.collection.UpdateOne(
@@ -27,14 +19,6 @@ func (db Db_mongo) Db_FixOneStuck(filter, update interface{}) {
 	)
 	if err != nil {
 		fmt.Println(err)
-	}
-}
-
-func (db Db_mongo) Db_InsertOneS(Insert interface{}) {
-
-	_, err := db.collection.InsertOne(context.TODO(), Insert)
-	if err != nil {
-		fmt.Print(err)
 	}
 }
 func (db Db_mongo) Db_FindtOne(dfkdf string, Username interface{}, c chan primitive.D) error {
@@ -52,8 +36,8 @@ func (db Db_mongo) Db_FindtOne(dfkdf string, Username interface{}, c chan primit
 func (db Db_mongo) Db_FindALL(dfkdf string, something interface{}) ([]primitive.M, error) {
 
 	f := bson.D{{dfkdf, something}}
-	coll := db.collection
-	axc, err := coll.Find(context.TODO(), f)
+
+	axc, err := db.collection.Find(context.TODO(), f)
 	var results []bson.M
 	if err != nil {
 		fmt.Print(err)
@@ -63,7 +47,7 @@ func (db Db_mongo) Db_FindALL(dfkdf string, something interface{}) ([]primitive.
 	}
 
 	var result bson.M
-	if err = coll.FindOne(context.TODO(), f).Decode(&result); err != nil {
+	if err = db.collection.FindOne(context.TODO(), f).Decode(&result); err != nil {
 		return nil, err
 	}
 	return results, nil
