@@ -1,12 +1,12 @@
 package login
 
 import (
-	db "api/db"
-	"api/gmail"
-	h "api/hash_class"
-	jwt "api/jwt/service"
+	db "api/all/db"
+	"api/all/gmail"
+	h "api/all/hash_class"
+	jwt "api/all/jwt/service"
 
-	r "api/random"
+	r "api/all/random"
 	"time"
 
 	"github.com/gin-gonic/gin"

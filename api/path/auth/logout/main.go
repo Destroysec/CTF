@@ -1,8 +1,8 @@
 package logout
 
 import (
-	db "api/db"
-	d "api/jwt/service"
+	db "api/all/db"
+	d "api/all/jwt/service"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"

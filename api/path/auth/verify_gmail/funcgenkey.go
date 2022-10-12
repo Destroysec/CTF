@@ -1,7 +1,7 @@
 package verify
 
 import (
-	db "api/db"
+	db "api/all/db"
 	//"fmt"
 
 	"go.mongodb.org/mongo-driver/bson"

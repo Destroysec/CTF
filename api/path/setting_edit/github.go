@@ -1,8 +1,8 @@
 package profile
 
 import (
-	db "api/db"
-	d "api/jwt/service"
+	db "api/all/db"
+	d "api/all/jwt/service"
 
 	"net/http"
 	"net/url"

@@ -7,7 +7,7 @@ import (
 	"time"
 	//"github.com/globalsign/mgo"
 	//"github.com/globalsign/mgo/bson"
-	config "api/setting"
+	config "api/all/setting"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -38,4 +38,29 @@ func (db *Db_mongo) Db_start(ztructDB DBStarterConfig) {
 	db.collection = client.Database("WEB").Collection(ztructDB.DATA.Database.Collection)
 	db.regcollection = client.Database("WEB").Collection(ztructDB.DATA.Database.Recollection)
 
+}
+
+type FormUD struct {
+	db     *Db_mongo
+	Insert struct{}
+}
+type FormUN struct {
+	db     *Db_mongo
+	Insert struct{}
+}
+type INSERTONE interface {
+	Db_insertOne()
+}
+
+func (F *FormUD) Db_insertOne() {
+	_, err := F.db.collection.InsertOne(context.TODO(), F.Insert)
+	if err != nil {
+		fmt.Print(err)
+	}
+}
+func (F *FormUN) Db_insertOne() {
+	_, err := F.db.regcollection.InsertOne(context.TODO(), F.Insert)
+	if err != nil {
+		fmt.Print(err)
+	}
 }

@@ -1,11 +1,11 @@
 package Middleware
 
 import (
-	db "api/db"
-	d "api/jwt/service"
+	db "api/all/db"
+	d "api/all/jwt/service"
 	"fmt"
 
-	h "api/hash_class"
+	h "api/all/hash_class"
 
 	"github.com/golang-jwt/jwt"
 

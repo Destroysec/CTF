@@ -2,8 +2,9 @@ package path
 
 import (
 	"api/Middleware"
-	db "api/db"
-	"api/gmail"
+	db "api/all/db"
+	"api/all/gmail"
+	config "api/all/setting"
 	pay "api/path/Pay"
 	Dash "api/path/Profile_Dash"
 	p "api/path/auth/login"
@@ -11,7 +12,6 @@ import (
 	Pa "api/path/auth/register"
 	v "api/path/auth/verify_gmail"
 	SET "api/path/setting_edit"
-	config "api/setting"
 
 	//"fmt"
 	"github.com/gin-gonic/gin"

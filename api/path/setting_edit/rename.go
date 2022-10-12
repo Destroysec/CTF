@@ -1,11 +1,11 @@
 package profile
 
 import (
-	db "api/db"
-	d "api/jwt/service"
+	db "api/all/db"
+	d "api/all/jwt/service"
 
-	h "api/hash_class"
-	r "api/random"
+	h "api/all/hash_class"
+	r "api/all/random"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

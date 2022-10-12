@@ -1,11 +1,11 @@
 package profile
 
 import (
-	"api/db"
-	"api/gmail"
-	h "api/hash_class"
-	d "api/jwt/service"
-	rr "api/random"
+	"api/all/db"
+	"api/all/gmail"
+	h "api/all/hash_class"
+	d "api/all/jwt/service"
+	rr "api/all/random"
 	"fmt"
 
 	"time"

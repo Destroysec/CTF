@@ -1,7 +1,7 @@
 package Dash
 
 import (
-	db "api/db"
+	db "api/all/db"
 
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -38,7 +38,7 @@ func Dash(c *gin.Context, s db.Db_mongo) {
 	if ds[0]["subdata"].(primitive.M)["markdown"] != nil {
 		sil["markdown"] = ds[0]["subdata"].(primitive.M)["markdown"].(string)
 	}
-	
+
 	c.JSON(200, gin.H{
 		"message": sil,
 	})

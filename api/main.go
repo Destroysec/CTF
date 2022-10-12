@@ -3,8 +3,8 @@ package main
 import (
 	//jwt "api/jwt/service"
 
+	rr "api/all/random"
 	p "api/path/compile_path"
-	rr "api/random"
 	"errors"
 	"fmt"
 	"os"

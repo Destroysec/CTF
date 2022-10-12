@@ -1,9 +1,9 @@
 package register
 
 import (
-	db "api/db"
+	db "api/all/db"
 
-	r "api/random"
+	r "api/all/random"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )

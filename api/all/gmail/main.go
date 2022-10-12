@@ -1,7 +1,7 @@
 package gmail
 
 import (
-	config "api/setting"
+	config "api/all/setting"
 	"bytes"
 	"fmt"
 	"html/template"

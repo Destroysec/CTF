@@ -1,9 +1,9 @@
 package profile
 
 import (
-	db "api/db"
-	d "api/jwt/service"
-	r "api/random"
+	db "api/all/db"
+	d "api/all/jwt/service"
+	r "api/all/random"
 	"net/http"
 	"os"
 	"path/filepath"

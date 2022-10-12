@@ -1,14 +1,14 @@
 package verify
 
 import (
-	db "api/db"
+	db "api/all/db"
 
-	h "api/hash_class"
+	h "api/all/hash_class"
 
 	"fmt"
 	"strings"
 
-	j "api/jwt/service"
+	j "api/all/jwt/service"
 	"time"
 
 	"github.com/gin-gonic/gin"

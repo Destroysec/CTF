@@ -1,11 +1,11 @@
 package register
 
 import (
-	db "api/db"
-	"api/gmail"
-	h "api/hash_class"
-	jwt "api/jwt/service"
-	r "api/random"
+	db "api/all/db"
+	"api/all/gmail"
+	h "api/all/hash_class"
+	jwt "api/all/jwt/service"
+	r "api/all/random"
 	"fmt"
 	"time"
 
